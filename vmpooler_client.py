@@ -8,7 +8,7 @@
 .. moduleauthor:: Joe Pinsonault <joe.pinsonault@puppetlabs.com>
 """
 
-__version__ = "2.4.1"
+__version__ = "2.4.2"
 
 #===================================================================================================
 # Imports
