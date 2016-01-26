@@ -120,18 +120,13 @@ class ServiceTests(TestCase):
       {{
         "ok": true,
         "{0}": {{
-          "template": "{1}",
-          "lifetime": {2},
-          "running": {3},
-          "state": "{4}",
-          "domain": "{5}"
+          "template": "{template}",
+          "lifetime": {lifetime},
+          "running": {running},
+          "state": "{state}",
+          "domain": "{domain}"
         }}
-      }}""".format(self.hostname,
-                   expected_info["template"],
-                   expected_info["lifetime"],
-                   expected_info["running"],
-                   expected_info["state"],
-                   expected_info["domain"])
+      }}""".format(self.hostname, **expected_info)
 
     resp = _HttpResponse(200, json_body)
 
