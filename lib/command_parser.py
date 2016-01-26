@@ -1,6 +1,6 @@
 """
 .. module:: vmpooler_client.lib.command_parser
-   :synopsis: Functions for reading and writing the configuration file.
+   :synopsis: A class for configuring the command-line parser.
    :platform: Unix, Linux, Windows
    :license: BSD
 .. moduleauthor:: Ryan Gard <ryan.gard@puppetlabs.com>
@@ -14,7 +14,7 @@ import argparse
 from util import MAX_LIFETIME
 
 #===================================================================================================
-# Functions: Private
+# Functions: Public
 #===================================================================================================
 def valid_lifetime(lifetime):
   """Validate the lifetime argument.

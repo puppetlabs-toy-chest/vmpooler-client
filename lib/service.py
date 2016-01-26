@@ -233,7 +233,7 @@ def get_vm(vmpooler_url, template_name, auth_token):
                        '/vm/{0}'.format(template_name),
                        headers=_create_auth_token_header(auth_token))
 
-  if resp.status == 503:
+  if resp.status == 404:
     raise RuntimeError('Could not retrieve template! Invalid template name provided!')
   elif resp.status != 200:
     errmsg = ('Could not connect to vmpooler! '
