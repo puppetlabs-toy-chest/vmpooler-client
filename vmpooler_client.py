@@ -8,15 +8,13 @@
 .. moduleauthor:: Joe Pinsonault <joe.pinsonault@puppetlabs.com>
 """
 
-__version__ = "2.4.2"
-
 #===================================================================================================
 # Imports
 #===================================================================================================
 import sys
-from lib.conf_file import load_config
-from lib.command_parser import CommandParser, valid_lifetime
-from lib.commands import config, lifetime, token, vm
+from vmpooler_client.conf_file import load_config
+from vmpooler_client.command_parser import CommandParser, valid_lifetime
+from vmpooler_client.commands import config, lifetime, token, vm
 
 #===================================================================================================
 # Functions: Private (Subcommands)
@@ -25,7 +23,7 @@ def _configure_config_subcommands(cmd_parser):
   """Configure the subcommands for the "config" top-level command.
 
   Args:
-    cmd_parser |lib.command_parser.CommandParser| = The command parser.
+    cmd_parser |vmpooler_client.command_parser.CommandParser| = The command parser.
 
   Returns:
     |None|
@@ -89,7 +87,7 @@ def _configure_lifetime_subcommands(cmd_parser):
   """Configure the subcommands for the "lifetime" top-level command.
 
   Args:
-    cmd_parser |lib.command_parser.CommandParser| = The command parser.
+    cmd_parser |vmpooler_client.command_parser.CommandParser| = The command parser.
 
   Returns:
     |None|
@@ -151,7 +149,7 @@ def _configure_token_subcommands(cmd_parser):
   """Configure the subcommands for the "token" top-level command.
 
   Args:
-    cmd_parser |lib.command_parser.CommandParser| = The command parser.
+    cmd_parser |vmpooler_client.command_parser.CommandParser| = The command parser.
 
   Returns:
     |None|
@@ -197,7 +195,7 @@ def _configure_vm_subcommands(cmd_parser):
   """Configure the subcommands for the "vm" top-level command.
 
   Args:
-    cmd_parser |lib.command_parser.CommandParser| = The command parser.
+    cmd_parser |vmpooler_client.command_parser.CommandParser| = The command parser.
 
   Returns:
     |None|
@@ -262,7 +260,7 @@ def configure_command_parser(argv):
     argv |list| = List of CLI commands and arguments.
 
   Returns:
-    |lib.command_parser.CommandParser| = A custom command parser.
+    |vmpooler_client.command_parser.CommandParser| = A custom command parser.
 
   Raises:
     |None|

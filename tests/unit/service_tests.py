@@ -10,7 +10,7 @@
 #===================================================================================================
 # Imports
 #===================================================================================================
-from lib import service
+from vmpooler_client import service
 from unittest import main, TestCase, skipIf
 from mock import patch
 
