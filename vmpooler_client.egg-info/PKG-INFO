@@ -1,0 +1,10 @@
+Metadata-Version: 1.0
+Name: vmpooler-client
+Version: 2.4.3
+Summary: Manage resources in the vmpooler service from the command-line.
+Home-page: https://github.com/puppetlabs/vmpooler-client
+Author: Ryan Gard
+Author-email: ryan.gard@puppetlabs.com
+License: UNKNOWN
+Description: UNKNOWN
+Platform: UNKNOWN
