@@ -1,1 +1,0 @@
-vmpooler_client
