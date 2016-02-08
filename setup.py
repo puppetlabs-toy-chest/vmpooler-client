@@ -26,5 +26,4 @@ setup(name='vmpooler-client',
       author_email='ryan.gard@puppetlabs.com',
       url='https://github.com/puppetlabs/vmpooler-client',
       packages=['vmpooler_client', 'vmpooler_client.commands'],
-      scripts=['vmpooler_client_app.py']
-     )
+      scripts=['vmpooler_client_app.py'])
