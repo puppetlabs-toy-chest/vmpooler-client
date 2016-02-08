@@ -26,3 +26,4 @@ import
 dist/
 build/
 MANIFEST
+*.egg-info
