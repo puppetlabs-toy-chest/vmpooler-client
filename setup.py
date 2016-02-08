@@ -3,7 +3,12 @@
 #===================================================================================================
 # Imports
 #===================================================================================================
-from setuptools import setup
+try:
+  # setuptools is used to build wheels. Fallback to distutils if it isn't available.
+  from setuptools import setup
+except ImportError:
+  from distutils.core import setup
+
 from vmpooler_client.version import version
 
 #===================================================================================================
