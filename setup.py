@@ -12,8 +12,21 @@ except ImportError:
 from os import path
 from vmpooler_client.version import version
 
+
 def load_readme(readme_filename):
     return open(path.join(path.dirname(__file__), readme_filename)).read()
+
+
+#===================================================================================================
+# Globals
+#===================================================================================================
+CLASSIFIERS = [
+    'Development Status :: 5 - Production/Stable',
+    'Intended Audience :: End Users/Desktop',
+    'Topic :: Utilities',
+    'License :: OSI Approved :: Apache Software License',
+    'Programming Language :: Python :: 2',
+    'Programming Language :: Python :: 2.7']
 
 #===================================================================================================
 # Main
@@ -26,4 +39,5 @@ setup(name='vmpooler-client',
       author_email='ryan.gard@puppetlabs.com',
       url='https://github.com/puppetlabs/vmpooler-client',
       packages=['vmpooler_client', 'vmpooler_client.commands'],
-      scripts=['vmpooler_client_app.py'])
+      scripts=['vmpooler_client_app.py'],
+      classifiers=CLASSIFIERS)
