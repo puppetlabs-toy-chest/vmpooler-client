@@ -1,5 +1,5 @@
 """
-.. module:: vmpooler_client.lib.util
+.. module:: vmpooler_client.util
    :synopsis: Utility function used by other modules in the vmpooler_client package.
    :platform: Unix, Linux, Windows
    :license: BSD

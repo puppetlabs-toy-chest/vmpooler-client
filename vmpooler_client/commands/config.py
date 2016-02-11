@@ -1,5 +1,5 @@
 """
-.. module:: vmpooler_client.lib.commands.config
+.. module:: vmpooler_client.commands.config
    :synopsis: Sub-commands for the "config" top-level command.
    :platform: Unix, Linux, Windows
    :license: BSD

@@ -1,5 +1,5 @@
 """
-.. module:: vmpooler_client.lib.commands.token
+.. module:: vmpooler_client.commands.token
    :synopsis: Sub-commands for the "token" top-level command.
    :platform: Unix, Linux, Windows
    :license: BSD

@@ -1,5 +1,5 @@
 """
-.. module:: vmpooler_client.lib.config
+.. module:: vmpooler_client.config
    :synopsis: Functions for reading and writing the configuration file.
    :platform: Unix, Linux, Windows
    :license: BSD

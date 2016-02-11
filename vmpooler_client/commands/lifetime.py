@@ -1,5 +1,5 @@
 """
-.. module:: vmpooler_client.lib.commands.lifetime
+.. module:: vmpooler_client.commands.lifetime
    :synopsis: Sub-commands for the "lifetime" top-level command.
    :platform: Unix, Linux, Windows
    :license: BSD

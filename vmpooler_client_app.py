@@ -11,10 +11,12 @@
 #===================================================================================================
 # Imports
 #===================================================================================================
+from __future__ import print_function
 import sys
 from vmpooler_client.conf_file import load_config
 from vmpooler_client.command_parser import CommandParser, valid_lifetime
 from vmpooler_client.commands import config, lifetime, token, vm
+from vmpooler_client.version import version
 
 #===================================================================================================
 # Functions: Private (Subcommands)
@@ -269,7 +271,12 @@ def configure_command_parser(argv):
   # Custom parser for CLI commands and sub-commands
   cmd_parser = CommandParser(argv)
 
-  # Top-level Commands
+  # Top-level commands WITHOUT sub-commands
+  cmd_parser.add_command('version',
+                         desc='Print the vmpooler_client_app version',
+                         func=lambda *args, **kwargs: print(version))
+
+  # Top-level commands with sub-commands
   cmd_parser.add_command('config', desc='Read and modify the vmpooler configuration file')
   cmd_parser.add_command('lifetime', desc='Manage the lifetime of VM instances')
   cmd_parser.add_command('token', desc='Manage auth tokens')
