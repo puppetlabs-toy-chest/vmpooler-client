@@ -85,17 +85,17 @@ class CommandParser(object):
       command = self._sub_parsers.add_parser(cmd_name, description=desc)
 
       # Add a subparser for sub-commands under a top-level command. (i.e. "list" for "vm")
-      if func is None:
-        self._commands[cmd_name] = command.add_subparsers()
-
-        # Tack on this bit of meta-data to indicate that sub-commands are ALLOWED
-        self._commands[cmd_name]._allow_sub_cmd = True
-      else:
+      if func:
         self._commands[cmd_name] = command
         self._commands[cmd_name].set_defaults(func=func)
 
         # Tack on this bit of meta-data to indicate that sub-commands are NOT allowed.
         self._commands[cmd_name]._allow_sub_cmd = False
+      else:
+        self._commands[cmd_name] = command.add_subparsers()
+
+        # Tack on this bit of meta-data to indicate that sub-commands are ALLOWED
+        self._commands[cmd_name]._allow_sub_cmd = True
     else:
       raise KeyError("The '{}' command has already been defined!".format(cmd_name))
 
@@ -118,7 +118,7 @@ class CommandParser(object):
     """
 
     if command not in self._commands:
-      raise KeyError("The '{}' command has not been defined yet!".format(parent))
+      raise KeyError("The '{}' command has not been defined yet!".format(command))
     elif 'name' not in kwargs:
       raise KeyError("The keyword argument 'name' must be specified for this method!")
 
