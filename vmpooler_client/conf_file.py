@@ -185,19 +185,19 @@ def get_credentials(config):
   return (config["username"], getpass('Password: '))
 
 
-def get_vmpooler_url(config):
-  """Request the vmpooler URL from the user.
-    If a URL is found in the config, defaults to that URL,
-    otherwise requests a URL and updates the config
+def get_vmpooler_hostname(config):
+  """Request the vmpooler hostname from the user.
+    If a hostname is found in the config, defaults to that hostname,
+    otherwise requests a hostname and updates the config
 
   Args:
     config |{str:str}| = A dictionary of configuration values.
 
   Returns:
-    vmpooler_url |str| = The vmpooler url
+    vmpooler_hostname |str| = The vmpooler hostname
 
   Raises:
     |None|
   """
-  prompt = "Please enter the URL of the vmpooler. This will only be requested once"
-  return request_config_value(config, "vmpooler_url", prompt)
+  prompt = "Please enter the hostname of the vmpooler. This will only be requested once"
+  return request_config_value(config, "vmpooler_hostname", prompt)

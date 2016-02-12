@@ -10,7 +10,7 @@
 #===================================================================================================
 # Imports
 #===================================================================================================
-from ..conf_file import get_vmpooler_url, get_auth_token
+from ..conf_file import get_vmpooler_hostname, get_auth_token
 from ..service import info_vm, set_vm_lifetime
 from ..util import MAX_LIFETIME
 
@@ -31,7 +31,7 @@ def get(args, config):
     |None|
   """
 
-  lifetime = info_vm(get_vmpooler_url(config), args.hostname, get_auth_token(config))["lifetime"]
+  lifetime = info_vm(get_vmpooler_hostname(config), args.hostname, get_auth_token(config))["lifetime"]
 
   print("lifetime: {} hours".format(lifetime))
 
@@ -50,7 +50,7 @@ def set(args, config):
     |None|
   """
 
-  set_vm_lifetime(get_vmpooler_url(config), args.hostname, args.hours, get_auth_token(config))
+  set_vm_lifetime(get_vmpooler_hostname(config), args.hostname, args.hours, get_auth_token(config))
 
 
 def extend(args, config):
@@ -67,7 +67,7 @@ def extend(args, config):
     |RuntimeError| = If the new lifetime would exceed the maximum allowed lifetime
   """
 
-  vm_info = info_vm(get_vmpooler_url(config), args.hostname, get_auth_token(config))
+  vm_info = info_vm(get_vmpooler_hostname(config), args.hostname, get_auth_token(config))
   running = round(float(vm_info["running"]))
   extension = int(args.hours)
 
@@ -78,6 +78,6 @@ def extend(args, config):
              'hours'.format(new_lifetime, MAX_LIFETIME))
     raise RuntimeError(error)
 
-  set_vm_lifetime(get_vmpooler_url(config), args.hostname, new_lifetime, get_auth_token(config))
+  set_vm_lifetime(get_vmpooler_hostname(config), args.hostname, new_lifetime, get_auth_token(config))
 
   print("Lifetime extended to roughly {} hours from now".format(extension))

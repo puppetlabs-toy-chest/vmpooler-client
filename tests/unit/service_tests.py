@@ -38,7 +38,7 @@ class ServiceTests(TestCase):
   """Tests for the ResourceConfig class in the config module."""
 
   def setUp(self):
-    self.vmpooler_url = 'vmpooler.delivery.puppetlabs.net'
+    self.vmpooler_hostname = 'vmpooler.delivery.puppetlabs.net'
     self.template_name = 'centos-4-x86_64'
     self.hostname = 'j2bgvv6x1ihqslx'
     self.auth_token = 'bdct6vxix5yfxndry32kmark0pyhriq9'
@@ -62,7 +62,7 @@ class ServiceTests(TestCase):
 
     # Patch
     with patch.object(service, '_make_request', return_value=resp) as mock_func:
-      self.assertEqual(service.get_vm(self.vmpooler_url,
+      self.assertEqual(service.get_vm(self.vmpooler_hostname,
                                       self.template_name,
                                       self.auth_token),
                        self.hostname)
@@ -79,7 +79,7 @@ class ServiceTests(TestCase):
     # Patch
     with patch.object(service, '_make_request', return_value=resp) as mock_func:
       with self.assertRaises(RuntimeError) as cm:
-        service.get_vm(self.vmpooler_url, self.template_name, self.auth_token)
+        service.get_vm(self.vmpooler_hostname, self.template_name, self.auth_token)
 
         excep = cm.exception
 
@@ -100,7 +100,7 @@ class ServiceTests(TestCase):
 
     # Patch
     with patch.object(service, '_make_request', return_value=resp) as mock_func:
-      self.assertListEqual(service.list_vm(self.vmpooler_url,
+      self.assertListEqual(service.list_vm(self.vmpooler_hostname,
                                            self.auth_token),
                            expected_machines)
 
@@ -132,7 +132,7 @@ class ServiceTests(TestCase):
 
     # Patch
     with patch.object(service, '_make_request', return_value=resp) as mock_func:
-      self.assertDictEqual(service.info_vm(self.vmpooler_url,
+      self.assertDictEqual(service.info_vm(self.vmpooler_hostname,
                                            self.hostname,
                                            self.auth_token),
                            expected_info)
@@ -148,7 +148,7 @@ class ServiceTests(TestCase):
 
     # Patch
     with patch.object(service, '_make_request', return_value=resp) as mock_func:
-      service.destroy_vm(self.vmpooler_url, self.hostname, self.auth_token)
+      service.destroy_vm(self.vmpooler_hostname, self.hostname, self.auth_token)
 
   @skipIf(SKIP_EVERYTHING, 'Skip if we are creating/modifying tests!')
   def test06_destroy_vm_neg(self):
@@ -162,7 +162,7 @@ class ServiceTests(TestCase):
     # Patch
     with patch.object(service, '_make_request', return_value=resp) as mock_func:
       with self.assertRaises(RuntimeError) as cm:
-        service.destroy_vm(self.vmpooler_url, self.hostname, self.auth_token)
+        service.destroy_vm(self.vmpooler_hostname, self.hostname, self.auth_token)
 
         excep = cm.exception
 
@@ -182,7 +182,7 @@ class ServiceTests(TestCase):
 
     # Patch
     with patch.object(service, '_make_request', return_value=resp) as mock_func:
-      service.set_vm_lifetime(self.vmpooler_url, self.hostname, lifetime, self.auth_token)
+      service.set_vm_lifetime(self.vmpooler_hostname, self.hostname, lifetime, self.auth_token)
 
   @skipIf(SKIP_EVERYTHING, 'Skip if we are creating/modifying tests!')
   def test08_set_vm_lifetime_neg(self):
@@ -199,7 +199,7 @@ class ServiceTests(TestCase):
     # Patch
     with patch.object(service, '_make_request', return_value=resp) as mock_func:
       with self.assertRaises(RuntimeError) as cm:
-        service.set_vm_lifetime(self.vmpooler_url, self.hostname, lifetime, self.auth_token)
+        service.set_vm_lifetime(self.vmpooler_hostname, self.hostname, lifetime, self.auth_token)
 
         excep = cm.exception
 
