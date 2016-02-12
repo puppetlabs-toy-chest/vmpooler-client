@@ -1,5 +1,5 @@
 """
-.. module:: vmpooler_client.lib.service
+.. module:: vmpooler_client.service
    :synopsis: Functions for communicating with the vmpooler API.
    :platform: Unix, Linux, Windows
    :license: BSD

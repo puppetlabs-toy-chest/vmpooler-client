@@ -1,5 +1,5 @@
 """
-.. module:: vmpooler_client.lib.commands.vm
+.. module:: vmpooler_client.commands.vm
    :synopsis: Sub-commands for the "vm" top-level command.
    :platform: Unix, Linux, Windows
    :license: BSD

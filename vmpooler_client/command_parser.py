@@ -1,5 +1,5 @@
 """
-.. module:: vmpooler_client.lib.command_parser
+.. module:: vmpooler_client.command_parser
    :synopsis: A class for configuring the command-line parser.
    :platform: Unix, Linux, Windows
    :license: BSD
@@ -65,27 +65,62 @@ class CommandParser(object):
     self._commands = {}
     self._sub_commands = {}
 
-  def add_command(self, cmd_name, desc):
+  def add_command(self, cmd_name, desc, func=None):
     """Create a top-level command.
 
     Args:
       cmd_name |str| = The name of the command.
       desc |str| = A description of the command.
+      func |func| = A function to use for commands that do not allow sub-commands.
+        If any value is supplied it is assumed that the command will never use sub-commands.
 
     Returns:
       None
 
     Raises:
-      |KeyError| Command name has already been defined.
+      |KeyError| = Command name has already been defined.
     """
 
     if cmd_name not in self._commands:
       command = self._sub_parsers.add_parser(cmd_name, description=desc)
 
-      # Add a subparser for sub-commands under a top-level command. (i.e. "list" for "vm")
-      self._commands[cmd_name] = command.add_subparsers()
+      if func:
+        self._commands[cmd_name] = command
+
+        # Set the function for a command that will have no sub-commands.
+        self._commands[cmd_name].set_defaults(func=func)
+      else:
+        # Add a subparser for sub-commands under a top-level command. (i.e. "list" for "vm")
+        self._commands[cmd_name] = command.add_subparsers()
     else:
       raise KeyError("The '{}' command has already been defined!".format(cmd_name))
+
+  def add_command_arg(self, command, **kwargs):
+    """Add an argument to a command. This only works with commands that do not allow
+    sub-commands!
+
+    Args:
+      command |str| = The name of the top-level command.
+      **kwargs |{str:obj}| = An arbitrary number of keyword arguments to pass to the
+        "ArgumentParser.add_argument()" method. The "name" keyword argument *must* be
+        supplied at a bare minimum!
+
+    Returns:
+      |None|
+
+    Raises:
+      |KeyError| = The command specified does not exist. The **kwargs dictionary is
+        missing the required "name" key.
+    """
+
+    if command not in self._commands:
+      raise KeyError("The '{}' command has not been defined yet!".format(command))
+    elif 'name' not in kwargs:
+      raise KeyError("The keyword argument 'name' must be specified for this method!")
+
+    arg_name = kwargs.pop('name')
+
+    self._commands[command].add_argument(arg_name, **kwargs)
 
   def add_sub_command(self, parent, sub_cmd_name, desc, func):
     """Create a sub-command for a top-level command.
@@ -101,7 +136,8 @@ class CommandParser(object):
       |None|
 
     Raises:
-      |KeyError| Command name has already been defined or parent command specified does not
+      |RuntimeError| = The parent command does not allow sub-commands.
+      |KeyError| = Command name has already been defined or parent command specified does not
         exist.
     """
 
@@ -110,6 +146,10 @@ class CommandParser(object):
 
     if parent not in self._commands:
       raise KeyError("The '{}' parent command has not been defined yet!".format(parent))
+    elif isinstance(self._commands[parent], argparse.ArgumentParser):
+      # If the parent is of the class "_SubParsersAction" then that means it
+      # can accept sub-commands.
+      raise RuntimeError("The '{}' parent command does not allow sub-commands!".format(parent))
     elif sub_cmd_key in self._sub_commands:
       raise KeyError("The '{}' sub-command has already been defined!".format(sub_cmd_key))
 
@@ -134,8 +174,8 @@ class CommandParser(object):
       |None|
 
     Raises:
-      |KeyError| The parent or sub-command specified does not exist. The **kwargs dictionary
-        is missing the required "name" key.
+      |KeyError| = The parent or sub-command specified does not exist. The **kwargs
+        dictionary is missing the required "name" key.
     """
 
     # Build unique key with composite of parent sub-command name.
