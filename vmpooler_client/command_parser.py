@@ -84,18 +84,14 @@ class CommandParser(object):
     if cmd_name not in self._commands:
       command = self._sub_parsers.add_parser(cmd_name, description=desc)
 
-      # Add a subparser for sub-commands under a top-level command. (i.e. "list" for "vm")
       if func:
         self._commands[cmd_name] = command
+
+        # Set the function for a command that will have no sub-commands.
         self._commands[cmd_name].set_defaults(func=func)
-
-        # Tack on this bit of meta-data to indicate that sub-commands are NOT allowed.
-        self._commands[cmd_name]._allow_sub_cmd = False
       else:
+        # Add a subparser for sub-commands under a top-level command. (i.e. "list" for "vm")
         self._commands[cmd_name] = command.add_subparsers()
-
-        # Tack on this bit of meta-data to indicate that sub-commands are ALLOWED
-        self._commands[cmd_name]._allow_sub_cmd = True
     else:
       raise KeyError("The '{}' command has already been defined!".format(cmd_name))
 
@@ -150,7 +146,9 @@ class CommandParser(object):
 
     if parent not in self._commands:
       raise KeyError("The '{}' parent command has not been defined yet!".format(parent))
-    elif not self._commands[parent]._allow_sub_cmd:
+    elif isinstance(self._commands[parent], argparse.ArgumentParser):
+      # If the parent is of the class "_SubParsersAction" then that means it
+      # can accept sub-commands.
       raise RuntimeError("The '{}' parent command does not allow sub-commands!".format(parent))
     elif sub_cmd_key in self._sub_commands:
       raise KeyError("The '{}' sub-command has already been defined!".format(sub_cmd_key))
