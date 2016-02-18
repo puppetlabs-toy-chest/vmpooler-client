@@ -10,7 +10,7 @@
 #===================================================================================================
 # Imports
 #===================================================================================================
-from ..conf_file import write_config, get_credentials, get_vmpooler_url
+from ..conf_file import write_config, get_credentials, get_vmpooler_hostname
 from ..service import create_auth_token, get_token_info, revoke_auth_token
 from ..util import pretty_print
 
@@ -32,7 +32,7 @@ def create(args, config):
   """
   (username, password) = get_credentials(config)
 
-  config['auth_token'] = create_auth_token(get_vmpooler_url(config), username, password)
+  config['auth_token'] = create_auth_token(get_vmpooler_hostname(config), username, password)
 
   write_config(config)
   print('\nToken: {0}'.format(config['auth_token']))
@@ -52,7 +52,7 @@ def validate(args, config):
     |None|
   """
 
-  pretty_print(get_token_info(get_vmpooler_url(config), args.token))
+  pretty_print(get_token_info(get_vmpooler_hostname(config), args.token))
 
 
 def revoke(args, config):
@@ -71,7 +71,7 @@ def revoke(args, config):
 
   (username, password) = get_credentials(config)
   print('')
-  revoke_auth_token(get_vmpooler_url(config), username, password, args.token)
+  revoke_auth_token(get_vmpooler_hostname(config), username, password, args.token)
 
   config['auth_token'] = ''
 

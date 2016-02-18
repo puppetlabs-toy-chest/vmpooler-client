@@ -11,7 +11,7 @@ To get help on the command-line for the script use the command:
 
 ::
 
-    vmpooler_client.py -h
+    vmpooler_client_app.py -h
 
 Quickstart
 ~~~~~~~~~~
@@ -19,7 +19,7 @@ Quickstart
 ::
 
     # Create a token (only on first run)
-    $ ./vmpooler_client.py token create
+    $ ./vmpooler_client_app.py token create
     Please provide LDAP credentials for the VM pooler
 
     Username: bob.smith
@@ -28,7 +28,7 @@ Quickstart
     Token: <token>
 
     # List available templates
-    $ ./vmpooler_client.py vm list redhat
+    $ ./vmpooler_client_app.py vm list redhat
     redhat-4-x86_64
     redhat-5-i386
     redhat-5-x86_64
@@ -37,7 +37,7 @@ Quickstart
     redhat-7-x86_64
 
     # Grab a VM
-    $ ./vmpooler_client.py vm get redhat-6-x86_64
+    $ ./vmpooler_client_app.py vm get redhat-6-x86_64
     Hostname: h2qbe7c29ix2w1r
 
     # Login and do work
@@ -46,16 +46,16 @@ Quickstart
     # Logout
 
     # Give vm back to the pool
-    $ ./vmpooler_client.py vm destroy h2qbe7c29ix2w1r
+    $ ./vmpooler_client_app.py vm destroy h2qbe7c29ix2w1r
 
 Examples
 ~~~~~~~~
 
-``vmpooler_client.py`` is separated into a few subcommands:
+``vmpooler_client_app.py`` is separated into a few subcommands:
 
 ::
 
-    vmpooler_client.py
+    vmpooler_client_app.py
         * vm
             * list
             * get
@@ -82,7 +82,7 @@ command:
 
 ::
 
-    vmpooler_client.py lifetime set -h
+    vmpooler_client_app.py lifetime set -h
 
 List vmpooler templates
 ^^^^^^^^^^^^^^^^^^^^^^^
@@ -93,7 +93,7 @@ This will list all the available templates.
 
 ::
 
-    vmpooler_client.py vm list
+    vmpooler_client_app.py vm list
 
 Filter the list vmpooler templates
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -104,13 +104,13 @@ Filter available templates via a fuzzy matching pattern.
 
 ::
 
-    vmpooler_client.py vm list PATTERN
+    vmpooler_client_app.py vm list PATTERN
 
 **Example**
 
 ::
 
-    vmpooler_client.py vm list win
+    vmpooler_client_app.py vm list win
 
 Get a VM from the vmpooler
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -122,13 +122,13 @@ Get a VM from the vmpooler
 
 ::
 
-    vmpooler_client.py vm get TEMPLATE_NAME
+    vmpooler_client_app.py vm get TEMPLATE_NAME
 
 **Example**
 
 ::
 
-    vmpooler_client.py vm get ubuntu-1404-x86_64
+    vmpooler_client_app.py vm get ubuntu-1404-x86_64
 
 List all of your running VMs
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -139,7 +139,7 @@ This gives you a concise list of what VMs you have running
 
 ::
 
-    vmpooler_client.py vm running
+    vmpooler_client_app.py vm running
 
 **Example Output**
 
@@ -159,13 +159,13 @@ Hand a VM back to the vmpooler for destruction
 
 ::
 
-    vmpooler_client.py vm destroy VM_NAME
+    vmpooler_client_app.py vm destroy VM_NAME
 
 **Example**
 
 ::
 
-    vmpooler_client.py vm destroy skj3k4hahdk
+    vmpooler_client_app.py vm destroy skj3k4hahdk
 
 Hand all active VMs back to the vmpooler for destruction
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -176,7 +176,7 @@ Be careful, this will destroy every active VM associate with your token
 
 ::
 
-    vmpooler_client.py vm destroy_all
+    vmpooler_client_app.py vm destroy_all
 
 **Example Output**
 
@@ -192,13 +192,13 @@ Get the time to live for a VM in the vmpooler
 
 ::
 
-    vmpooler_client.py lifetime get VM_NAME
+    vmpooler_client_app.py lifetime get VM_NAME
 
 **Example**
 
 ::
 
-    vmpooler_client.py lifetime get skj3k4hahdk
+    vmpooler_client_app.py lifetime get skj3k4hahdk
 
 Extend the time to live for a VM in the vmpooler
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -208,13 +208,13 @@ This command will add a certain number of hours to the lifetime of a VM
 
 ::
 
-    vmpooler_client.py lifetime extend VM_NAME LIFETIME
+    vmpooler_client_app.py lifetime extend VM_NAME LIFETIME
 
 **Example**
 
 ::
 
-    vmpooler_client.py lifetime extend skj3k4hahdk 2
+    vmpooler_client_app.py lifetime extend skj3k4hahdk 2
     > Lifetime extended to 10 hours
 
 Set the total time to live for a VM in the vmpooler to a certain number of hours
@@ -226,13 +226,13 @@ This command will overwrite the time to live for a VM
 
 ::
 
-    vmpooler_client.py lifetime set VM_NAME LIFETIME
+    vmpooler_client_app.py lifetime set VM_NAME LIFETIME
 
 **Example**
 
 ::
 
-    vmpooler_client.py lifetime set skj3k4hahdk 24
+    vmpooler_client_app.py lifetime set skj3k4hahdk 24
 
 Get information on a VM in the vmpooler
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -243,13 +243,13 @@ This will work on running and destroyed VMs in the vmpooler.
 
 ::
 
-    vmpooler_client.py vm info VM_NAME
+    vmpooler_client_app.py vm info VM_NAME
 
 **Example**
 
 ::
 
-    vmpooler_client.py vm info skj3k4hahdk
+    vmpooler_client_app.py vm info skj3k4hahdk
 
 Create an authorization token for use with the vmpooler
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -260,7 +260,7 @@ WARNING! Know what you’re doing before using this function!
 
 ::
 
-    vmpooler_client.py token create
+    vmpooler_client_app.py token create
 
 Revoke an authorization token
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -271,13 +271,13 @@ WARNING! Know what you’re doing before using this function!
 
 ::
 
-    vmpooler_client.py token revoke TOKEN
+    vmpooler_client_app.py token revoke TOKEN
 
 **Example**
 
 ::
 
-    vmpooler_client.py token revoke sfn3h65earxah6ar9aal3oac2pfx9817
+    vmpooler_client_app.py token revoke sfn3h65earxah6ar9aal3oac2pfx9817
 
 Verify that an authorization token is valid
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -288,13 +288,13 @@ WARNING! Know what you’re doing before using this function!
 
 ::
 
-    vmpooler_client.py token validate TOKEN
+    vmpooler_client_app.py token validate TOKEN
 
 **Example**
 
 ::
 
-    vmpooler_client.py token validate sfn3h65earxah6ar9aal3oac2pfx9817
+    vmpooler_client_app.py token validate sfn3h65earxah6ar9aal3oac2pfx9817
 
 Read a config setting
 ^^^^^^^^^^^^^^^^^^^^^
@@ -303,13 +303,13 @@ Read a config setting
 
 ::
 
-    vmpooler_client.py config get SETTING_NAME
+    vmpooler_client_app.py config get SETTING_NAME
 
 **Example**
 
 ::
 
-    vmpooler_client.py config get username
+    vmpooler_client_app.py config get username
 
 Modify/create a config setting
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -321,14 +321,14 @@ exist yet.
 
 ::
 
-    vmpooler_client.py config set SETTING_NAME VALUE
+    vmpooler_client_app.py config set SETTING_NAME VALUE
 
 **Examples**
 
 ::
 
-    vmpooler_client.py config set username bob.smith
-    vmpooler_client.py config set a_new_setting some_value
+    vmpooler_client_app.py config set username bob.smith
+    vmpooler_client_app.py config set a_new_setting some_value
 
 Remove a config setting
 ^^^^^^^^^^^^^^^^^^^^^^^
@@ -337,13 +337,13 @@ Remove a config setting
 
 ::
 
-    vmpooler_client.py config unset SETTING_NAME
+    vmpooler_client_app.py config unset SETTING_NAME
 
 **Example**
 
 ::
 
-    vmpooler_client.py config unset auth_token
+    vmpooler_client_app.py config unset auth_token
 
 List all config settings
 ^^^^^^^^^^^^^^^^^^^^^^^^
@@ -353,4 +353,4 @@ List all config settings
 
 ::
 
-    vmpooler_client.py config list
+    vmpooler_client_app.py config list

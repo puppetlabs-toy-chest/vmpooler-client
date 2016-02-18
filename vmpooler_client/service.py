@@ -92,12 +92,12 @@ def _create_auth_token_header(auth_token):
 #===================================================================================================
 # Functions: Public
 #===================================================================================================
-def create_auth_token(vmpooler_url, username, password):
+def create_auth_token(vmpooler_hostname, username, password):
   """
   Generate an authorization token.
 
   Args:
-    vmpooler_url |str| = The URL of the vmpooler
+    vmpooler_hostname |str| = The URL of the vmpooler
     username |str| = The username for the authorization token request.
     password |str| = The password for the authorization token request.
 
@@ -109,7 +109,7 @@ def create_auth_token(vmpooler_url, username, password):
   """
 
   resp = _make_request('POST',
-                       vmpooler_url,
+                       vmpooler_hostname,
                        '/token',
                        headers=_create_basic_auth_header(username, password))
 
@@ -124,12 +124,12 @@ def create_auth_token(vmpooler_url, username, password):
   return loads(resp.read())['token']
 
 
-def get_token_info(vmpooler_url, auth_token, suppress_return=False):
+def get_token_info(vmpooler_hostname, auth_token, suppress_return=False):
   """
   Verify that an authorization token is still valid.
 
   Args:
-    vmpooler_url |str| = The URL of the vmpooler
+    vmpooler_hostname |str| = The URL of the vmpooler
     auth_token |str| = The authorization token to validate.
     suppress_return |bln| = Suppress returning token information.
 
@@ -140,7 +140,7 @@ def get_token_info(vmpooler_url, auth_token, suppress_return=False):
     |RuntimeError| = The request was bad or incorrect credentials provided.
   """
 
-  resp = _make_request('GET', vmpooler_url, '/token/{0}'.format(auth_token))
+  resp = _make_request('GET', vmpooler_hostname, '/token/{0}'.format(auth_token))
 
   if resp.status == 404:
     raise RuntimeError('Token already revoked or invalid token specified!')
@@ -153,12 +153,12 @@ def get_token_info(vmpooler_url, auth_token, suppress_return=False):
     return loads(resp.read())[auth_token]
 
 
-def revoke_auth_token(vmpooler_url, username, password, auth_token):
+def revoke_auth_token(vmpooler_hostname, username, password, auth_token):
   """
   Revoke an authorization token.
 
   Args:
-    vmpooler_url |str| = The URL of the vmpooler
+    vmpooler_hostname |str| = The URL of the vmpooler
     username |str| = The username for the authorization token request.
     password |str| = The password for the authorization token request.
     auth_token |str| = The authorization token to revoke.
@@ -171,7 +171,7 @@ def revoke_auth_token(vmpooler_url, username, password, auth_token):
   """
 
   resp = _make_request('DELETE',
-                       vmpooler_url,
+                       vmpooler_hostname,
                        '/token/{0}'.format(auth_token),
                        headers=_create_basic_auth_header(username, password))
 
@@ -180,11 +180,11 @@ def revoke_auth_token(vmpooler_url, username, password, auth_token):
     raise RuntimeError(errmsg)
 
 
-def list_vm(vmpooler_url, auth_token):
+def list_vm(vmpooler_hostname, auth_token):
   """Retrieve a list of availabe VM templates from the pooler.
 
   Args:
-    vmpooler_url |str| = The URL of the vmpooler
+    vmpooler_hostname |str| = The URL of the vmpooler
     auth_token |str| = The authentication token for the user
 
   Returns:
@@ -196,7 +196,7 @@ def list_vm(vmpooler_url, auth_token):
   """
 
   resp = _make_request('GET',
-                       vmpooler_url,
+                       vmpooler_hostname,
                        '/vm',
                        headers=_create_auth_token_header(auth_token))
 
@@ -213,11 +213,11 @@ def list_vm(vmpooler_url, auth_token):
   return vmpooler_status
 
 
-def get_vm(vmpooler_url, template_name, auth_token):
+def get_vm(vmpooler_hostname, template_name, auth_token):
   """Retrieve a VM from the vmpooler and return the hostname.
 
   Args:
-    vmpooler_url |str| = The URL of the vmpooler
+    vmpooler_hostname |str| = The URL of the vmpooler
     template_name |str| = The name of the template on the vmpooler.
     auth_token |str| = The authentication token for the user
 
@@ -229,7 +229,7 @@ def get_vm(vmpooler_url, template_name, auth_token):
   """
 
   resp = _make_request('POST',
-                       vmpooler_url,
+                       vmpooler_hostname,
                        '/vm/{0}'.format(template_name),
                        headers=_create_auth_token_header(auth_token))
 
@@ -248,11 +248,11 @@ def get_vm(vmpooler_url, template_name, auth_token):
   return vmpooler_status[template_name]['hostname']
 
 
-def info_vm(vmpooler_url, vm_name, auth_token):
+def info_vm(vmpooler_hostname, vm_name, auth_token):
   """Retrieve information for a VM in the vmpooler.
 
   Args:
-    vmpooler_url |str| = The URL of the vmpooler
+    vmpooler_hostname |str| = The URL of the vmpooler
     vm_name |str| = The name of the VM from which to retrieve information.
     auth_token |str| = The authentication token for the user
 
@@ -264,7 +264,7 @@ def info_vm(vmpooler_url, vm_name, auth_token):
   """
 
   resp = _make_request('GET',
-                       vmpooler_url,
+                       vmpooler_hostname,
                        '/vm/{0}'.format(vm_name),
                        headers=_create_auth_token_header(auth_token))
 
@@ -278,11 +278,11 @@ def info_vm(vmpooler_url, vm_name, auth_token):
   return loads(resp.read())[vm_name]
 
 
-def destroy_vm(vmpooler_url, vm_name, auth_token):
+def destroy_vm(vmpooler_hostname, vm_name, auth_token):
   """Hand a VM back to the vmpooler to be destroyed.
 
   Args:
-    vmpooler_url |str| = The URL of the vmpooler
+    vmpooler_hostname |str| = The URL of the vmpooler
     vm_name |str| = The name of the VM (hostname) to destroy.
     auth_token |str| = The authentication token for the user
 
@@ -294,7 +294,7 @@ def destroy_vm(vmpooler_url, vm_name, auth_token):
   """
 
   resp = _make_request('DELETE',
-                       vmpooler_url,
+                       vmpooler_hostname,
                        '/vm/{0}'.format(vm_name),
                        headers=_create_auth_token_header(auth_token))
 
@@ -306,11 +306,11 @@ def destroy_vm(vmpooler_url, vm_name, auth_token):
     raise RuntimeError(errmsg)
 
 
-def set_vm_lifetime(vmpooler_url, vm_name, lifetime, auth_token):
+def set_vm_lifetime(vmpooler_hostname, vm_name, lifetime, auth_token):
   """Set the time to live for a VM.
 
   Args:
-    vmpooler_url |str| = The URL of the vmpooler
+    vmpooler_hostname |str| = The URL of the vmpooler
     vm_name |str| = The name of the VM (hostname) to set time to live.
     lifetime |int| = The number of hours to set the time to live for the VM.
     auth_token |str| = The authentication token for the user
@@ -323,7 +323,7 @@ def set_vm_lifetime(vmpooler_url, vm_name, lifetime, auth_token):
   """
 
   resp = _make_request('PUT',
-                       vmpooler_url,
+                       vmpooler_hostname,
                        '/vm/{}'.format(vm_name),
                        body='{{"lifetime":"{}"}}'.format(lifetime),
                        headers=_create_auth_token_header(auth_token))
